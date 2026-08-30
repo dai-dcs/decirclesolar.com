@@ -275,7 +275,7 @@ export default function Contact() {
 
             {status === "success" && (
               <p style={{ color: "var(--navy)", fontSize: "14.5px", fontWeight: 600 }}>
-                Thanks — your message has been sent. We&apos;ll be in touch shortly.
+                Thank you — Your message has been sent. We&apos;ll get in touch shortly.
               </p>
             )}
             {status === "error" && (

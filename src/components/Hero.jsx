@@ -27,8 +27,7 @@ export default function Hero() {
         <div className="wrap">
           <div className="hero-content">
             <div className="hero-tag">
-              <span className="dot"></span> Renewable Infrastructure Platform ·
-              UAE &amp; India
+              <span className="dot"></span> Renewable Infrastructure Platform · India · UAE · Global Capital
             </div>
             <h1 className="hero-h">
               Building the next generation of <em>solar energy assets</em>
