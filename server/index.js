@@ -1,4 +1,10 @@
-import 'dotenv/config';
+// Support running multiple environments (staging, production) from the same
+// checkout on one host: each PM2 app sets ENV_FILE to point at its own env
+// file (e.g. .env.staging / .env.production) so they never share a port,
+// origin allow-list, or Brevo key. Falls back to the plain .env for local dev.
+import dotenv from 'dotenv';
+dotenv.config({ path: process.env.ENV_FILE || '.env' });
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';

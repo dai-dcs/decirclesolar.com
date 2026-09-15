@@ -4,6 +4,7 @@ server/node_modules
 
 # Build output
 dist
+dist-staging
 dist-ssr
 build
 server/dist
