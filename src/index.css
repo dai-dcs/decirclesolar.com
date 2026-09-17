@@ -259,7 +259,7 @@ h1.hero-h em { font-style: normal; color: var(--gold); }
 
 .c-block p, .c-block a { font-size: 16.6px; color: var(--navy); font-weight: 500; }
 
-.office-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 36px 0px 8px; }
+.office-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin: 36px 0px 8px; }
 
 .office-card { background: rgb(255, 255, 255); border-right-color: ; border-right-style: ; border-right-width: ; border-bottom-color: ; border-bottom-style: ; border-bottom-width: ; border-left-color: ; border-left-style: ; border-left-width: ; border-image-source: ; border-image-slice: ; border-image-width: ; border-image-outset: ; border-image-repeat: ; border-radius: 16px; padding: 22px 20px; border-top: 3px solid var(--gold); }
 

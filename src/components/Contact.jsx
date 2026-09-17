@@ -311,16 +311,7 @@ export default function Contact() {
               Mumbai, Maharashtra 400072
             </p>
           </div>
-          <div className="office-card">
-            <h5>Hyderabad</h5>
-            <h4>DeCircle Solar Projects</h4>
-            <p>
-              126, Venkatadri Nagar,
-              <br />
-              Hyderabad, Telangana 500098
-            </p>
           </div>
-        </div>
       </div>
     </section>
   );
