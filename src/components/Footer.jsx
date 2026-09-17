@@ -51,24 +51,32 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h5>Get in Touch</h5>
+            <h5>Quick Links</h5>
             <ul>
-              <li>A3, Dubai South Business Park, Dubai, UAE</li>
-              <li>
+              {/* <li>
                 <a href="mailto:care@decirclesolar.com">care@decirclesolar.com</a>
               </li>
               <li>
-                <a href="tel:+919652291911">+91 96522 91911</a>
+                <a href="tel:+99638 91911">+91 99638 91911</a>
+              </li>
+              <li>
+                UAE&nbsp;·&nbsp;india
+              </li> */}
+              <li>
+                <span>
+                  <a href="#/privacy-policy">Privacy Policy</a> 
+                  {/* &nbsp;·&nbsp;{" "} */}
+                </span>
+              </li>
+              <li>
+                  <a href="#/terms-and-conditions">Terms &amp; Conditions</a>
               </li>
             </ul>
           </div>
         </div>
         <div className="foot-bottom">
           <span>Copyright © {new Date().getFullYear()} DeCircle Solar DWC LLC.</span>
-          <span>
-            <a href="#">Privacy Policy</a> &nbsp;·&nbsp;{" "}
-            <a href="#">Terms &amp; Conditions</a>
-          </span>
+
         </div>
       </div>
     </footer>

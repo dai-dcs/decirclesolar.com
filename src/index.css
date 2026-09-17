@@ -371,3 +371,59 @@ footer p { font-size: 14.5px; }
 }
 
 img, svg { max-width: 100%; height: auto; }
+
+/* Legal pages (Privacy Policy / Terms & Conditions) */
+.legal { padding: 138px 0px 48px; min-height: 62vh; background: rgb(255, 255, 255); }
+
+.legal-panel { animation: 0.5s ease 0s 1 normal both running legalFadeUp; max-width: 860px; }
+
+@keyframes legalFadeUp {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: none; }
+}
+
+.legal-panel .eyebrow { margin-bottom: 18px; }
+
+.legal-panel h1 { font-family: Montserrat, sans-serif; font-size: clamp(28px, 3.6vw, 42px); font-weight: 600; line-height: 1.12; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 14px; }
+
+.legal-panel h1 + p { font-family: Montserrat, sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; color: var(--ink-50); text-transform: uppercase; margin-bottom: 30px; }
+
+.legal-panel h1 + p strong { font-weight: 600; }
+
+.legal-panel h2 { font-family: Montserrat, sans-serif; font-size: clamp(20px, 2.4vw, 27px); font-weight: 600; line-height: 1.25; color: var(--navy); border-top: 3px solid var(--gold); padding-top: 22px; margin: 44px 0px 14px; letter-spacing: -0.01em; }
+
+.legal-panel h3 { font-family: Montserrat, sans-serif; font-size: 18.4px; font-weight: 600; color: var(--navy-soft); margin: 28px 0px 10px; }
+
+.legal-panel hr { border-width: 0px; }
+
+.legal-panel p { color: var(--ink-70); font-size: 16.2px; line-height: 1.7; margin-bottom: 16px; }
+
+.legal-panel strong { color: var(--navy); font-weight: 600; }
+
+.legal-panel em { color: var(--ink-50); }
+
+.legal-panel a { color: var(--orange); font-weight: 600; transition: color 0.2s; }
+
+.legal-panel a:hover { color: var(--navy); }
+
+.legal-panel ul { list-style: none; margin: 10px 0px 18px; padding-left: 2px; }
+
+.legal-panel ul li { position: relative; padding-left: 20px; margin-bottom: 9px; color: var(--ink-70); font-size: 16.2px; line-height: 1.6; }
+
+.legal-panel ul li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+
+.legal-panel ol { margin: 10px 0px 18px; padding-left: 24px; }
+
+.legal-panel ol li { margin-bottom: 9px; color: var(--ink-70); font-size: 16.2px; line-height: 1.6; padding-left: 4px; }
+
+.legal-panel ol li::marker { color: var(--orange); font-weight: 700; }
+
+.back-home { margin-top: 36px; }
+
+@media (max-width: 600px) {
+  .legal { padding: 112px 0px 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legal-panel { animation: auto ease 0s 1 normal none running none; }
+}

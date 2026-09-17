@@ -63,3 +63,4 @@ Thumbs.db
 *.local
 coverage
 .cache
+src/content/ 
