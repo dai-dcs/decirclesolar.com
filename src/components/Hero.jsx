@@ -11,6 +11,7 @@ export default function Hero() {
           <svg
             className="hero-towers"
             viewBox="0 0 220 160"
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
           >
             <g stroke="rgba(255,255,255,.5)" strokeWidth="1.4" fill="none">

@@ -4,7 +4,7 @@
 
 ## 1. Introduction
 
-Welcome to DeCircle Solar ("**DeCircle Solar**," "**we**," "**us**," or "**our**"), operated by **DeCircle Solar DWC LLC**, a company registered in **Dubai, UAE** with its registered office at **3rd Floor, A3 building, DWC Business Center, Dubai South, Dubai, UAE**.
+Welcome to DeCircle Solar ("**DeCircle Solar**," "**we**," "**us**," or "**our**"), operated by **DeCircle Solar Holdings Pvt Ltd**, a company registered in **India** with its registered office at **602, Lodha Supremus, Powai, Mumbai, Maharashtra 400072**.
 
 DeCircle Solar is an AI-enabled platform for solar project development, finance, and asset transactions, connecting solar developers, investors, EPC (Engineering, Procurement, and Construction) contractors, and capital providers across the UAE and India (the "**Platform**" or "**Services**").
 
@@ -172,12 +172,12 @@ We may update this Privacy Policy from time to time to reflect changes in our pr
 
 If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us at:
 
-**DeCircle Solar DWC LLC**
+**DeCircle Solar Holdings Pvt Ltd**
 Attn: Data Protection / Privacy Officer
-Address: **3rd Floor, A3 building, DWC Business Center, Dubai South, Dubai, UAE**
-Email: **legal@decirclesolar.com**
-Phone: **+91 96522 91911**
+Address: **602, Lodha Supremus, Powai, Mumbai, Maharashtra 400072**
+Email: **care@decirclesolar.com**
+Phone: **+91 99638 91911**
 
 ---
 
-*This Privacy Policy is provided as a general template. Given that DeCircle Solar facilitates cross-border financial and investment-related transactions between the UAE and India, we strongly recommend having this document reviewed by a qualified data protection/privacy lawyer familiar with the UAE PDPL, India's DPDP Act 2023, and any sector-specific financial regulations (e.g., relating to investment facilitation) before publishing it live.*
+

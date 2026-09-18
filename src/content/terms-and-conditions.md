@@ -4,7 +4,7 @@
 
 ## 1. Introduction and Acceptance
 
-These Terms and Conditions ("**Terms**") govern your access to and use of the website [https://decirclesolar.com](https://decirclesolar.com) and all related services (collectively, the "**Platform**" or "**Services**"), operated by **DeCircle Solar DWC LLC** ("**DeCircle Solar**," "**we**," "**us**," or "**our**"), a company registered at **3rd Floor, A3 building, DWC Business Center, Dubai South, Dubai, UAE**.
+These Terms and Conditions ("**Terms**") govern your access to and use of the website [https://decirclesolar.com](https://decirclesolar.com) and all related services (collectively, the "**Platform**" or "**Services**"), operated by **DeCircle Solar Holdings Pvt Ltd** ("**DeCircle Solar**," "**we**," "**us**," or "**our**"), a company registered at **602, Lodha Supremus, Powai, Mumbai, Maharashtra 400072**.
 
 DeCircle Solar is an AI-enabled platform that connects solar project developers, investors, EPC (Engineering, Procurement, and Construction) contractors, and capital providers to facilitate solar project development, financing, and asset transactions across the UAE and India.
 
@@ -198,11 +198,11 @@ Our failure to enforce any right or provision of these Terms shall not be deemed
 
 If you have any questions about these Terms, please contact us at:
 
-**DeCircle Solar DWC LLC**
-Address: **3rd Floor, A3 building, DWC Business Center, Dubai South, Dubai, UAE**
-Email: **legal@decirclesolar.com**
-Phone: **+91 96522 91911**
+**DeCircle Solar Holdings Pvt Ltd**
+Address: **602, Lodha Supremus, Powai, Mumbai, Maharashtra 400072**
+Email: **care@decirclesolar.com**
+Phone: **+91 99638 91911**
 
 ---
 
-*This Terms and Conditions document is provided as a general template. Because DeCircle Solar facilitates cross-border solar project financing and asset transactions between the UAE and India, we strongly recommend having this document reviewed by a qualified commercial/technology lawyer familiar with UAE and Indian law — particularly around financial facilitation, investment intermediary regulations, and cross-border data/contract enforcement — before publishing it live.*
+

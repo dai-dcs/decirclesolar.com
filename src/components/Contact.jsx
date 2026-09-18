@@ -161,7 +161,7 @@ export default function Contact() {
           </div>
           <div className="c-block">
             <h4>Phone</h4>
-            <a href="tel:+919652291911">+91 96522 91911</a>
+            <a href="tel:+9963891911">+91 9963891911</a>
           </div>
           <div className="c-block">
             <h4>Regions Served</h4>
@@ -169,12 +169,18 @@ export default function Contact() {
           </div>
           <div className="c-block">
             <h4>Company Profile</h4>
-            <a href="https://www.decirclesolar.com/DeCircle_Solar_lrs.pdf">
-              Download PDF ↓
+            <a
+              href="/DeCircle_Solar_lrs.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Company Profile ↗
             </a>
           </div>
           <a
             href="https://www.linkedin.com/company/decircle-solar-dwc-llc/"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               fontFamily: "'Montserrat',sans-serif",
               fontWeight: 600,
