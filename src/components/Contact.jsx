@@ -312,12 +312,12 @@ export default function Contact() {
             </p>
           </div>
           <div className="office-card">
-            <h5>Mumbai</h5>
-            <h4>DeCircle Solar Holdings Pvt Ltd</h4>
+            <h5>HYDERABAD</h5>
+            <h4>DeCircle Solar Projects</h4>
             <p>
-              602, Lodha Supremus, Powai,
+               126, Venkatadri Nagar, Chengicherla, 
               <br />
-              Mumbai, Maharashtra 400072
+                Hyderabad, Telangana - 500 098  
             </p>
           </div>
           </div>

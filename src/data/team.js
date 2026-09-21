@@ -119,19 +119,19 @@ export const teamMembers = [
       { value: "650+", label: "Industry contacts by name" },
     ],
   },
-  {
-    initials: "PB",
-    name: "Parag Badgujar",
-    domain: "Techno Commercial Advisor",
-    quote:
-      "2 GW+ of delivered renewables and 18 years inside the Indian solar market — regulatory frameworks, financing mechanisms and supply-chain dynamics on tap.",
-    tags: ["Solar Development", "Reg. & Financing", "Ecosystem Network"],
-    detail:
-      "18 years of renewable energy business development experience and 2 GW+ of delivered projects across the solar development ecosystem. Command of the Indian solar market spans regulatory frameworks, financing mechanisms and supply-chain dynamics.",
-    metrics: [
-      { value: "18 Yrs", label: "Business development" },
-      { value: "2 GW+", label: "Projects delivered" },
-      { value: "3", label: "Regulation, finance, supply" },
-    ],
-  },
+  // {
+  //   initials: "PB",
+  //   name: "Parag Badgujar",
+  //   domain: "Techno Commercial Advisor",
+  //   quote:
+  //     "2 GW+ of delivered renewables and 18 years inside the Indian solar market — regulatory frameworks, financing mechanisms and supply-chain dynamics on tap.",
+  //   tags: ["Solar Development", "Reg. & Financing", "Ecosystem Network"],
+  //   detail:
+  //     "18 years of renewable energy business development experience and 2 GW+ of delivered projects across the solar development ecosystem. Command of the Indian solar market spans regulatory frameworks, financing mechanisms and supply-chain dynamics.",
+  //   metrics: [
+  //     { value: "18 Yrs", label: "Business development" },
+  //     { value: "2 GW+", label: "Projects delivered" },
+  //     { value: "3", label: "Regulation, finance, supply" },
+  //   ],
+  // },
 ];

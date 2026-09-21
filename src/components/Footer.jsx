@@ -54,7 +54,9 @@ export default function Footer() {
             <h5>Get in Touch</h5>
             <ul> 
               <li>
-                602, Lodha Supremus, Powai,Mumbai, Maharashtra 400072
+                DeCircle Solar Projects 
+                <br />
+                126, Venkatadri Nagar, Chengicherla, Hyderabad, Telangana - 500 098
               </li>
               <li>
                 <a href="mailto:care@decirclesolar.com">care@decirclesolar.com</a>
