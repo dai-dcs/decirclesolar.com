@@ -9,6 +9,7 @@ import Team from "./components/Team";
 import Audience from "./components/Audience";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import LeadModal from "./components/LeadModal";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 
@@ -61,7 +62,16 @@ export default function App() {
     document.title = PAGE_TITLES[route] ? `${PAGE_TITLES[route]} · DeCircle Solar` : HOME_TITLE;
   }, [route]);
 
-  if (route === "/privacy-policy") return <PrivacyPolicy />;
-  if (route === "/terms-and-conditions") return <Terms />;
-  return <Home />;
+  let page;
+  if (route === "/privacy-policy") page = <PrivacyPolicy />;
+  else if (route === "/terms-and-conditions") page = <Terms />;
+  else page = <Home />;
+
+  // Auto-opening lead-capture modal (3s after load, once per user)
+  return (
+    <>
+      {page}
+      <LeadModal />
+    </>
+  );
 }

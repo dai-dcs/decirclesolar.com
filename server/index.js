@@ -11,6 +11,8 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import validator from 'validator';
 
+import { appendLeadRow } from './sheets.js';
+
 const {
   BREVO_API_KEY,
   CONTACT_TO_EMAIL = 'care@decirclesolar.com',
@@ -79,9 +81,27 @@ const contactLimiter = rateLimit({
   message: { error: 'Too many requests. Please try again later.' },
 });
 
+// Separate bucket for the lead-capture modal so its traffic never starves
+// (or is starved by) the contact form.
+const leadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // max 10 submissions per IP per window
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests. Please try again later.' },
+});
+
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
+
+// Warn (but don't crash) when the webhook isn't configured yet — the contact
+// flow must keep working on deployments that don't use the lead modal.
+if (!process.env.GOOGLE_SHEET_WEBHOOK_URL) {
+  console.warn(
+    'WARN: GOOGLE_SHEET_WEBHOOK_URL not set — POST /api/lead will fail until the Google Apps Script webhook is configured (see .env.example).'
+  );
+}
 
 function escapeHtml(str = '') {
   return str
@@ -182,6 +202,73 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     return res.json({ success: true });
   } catch (err) {
     console.error('Contact form error:', err);
+    return res.status(500).json({ error: 'Unexpected server error. Please try again.' });
+  }
+});
+
+const LEAD_LOOKING_FOR_OPTIONS = new Set(['Fundraising', 'Business Advisory']);
+
+app.post('/api/lead', leadLimiter, async (req, res) => {
+  try {
+    const body = req.body || {};
+
+    // Honeypot: bots that fill hidden fields are silently dropped
+    if (body.company_website) {
+      return res.json({ success: true });
+    }
+
+    const fullName = validator.trim(String(body.fullName || ''));
+    const email = validator.trim(String(body.email || ''));
+    const phone = validator.trim(String(body.phone || ''));
+    const company = validator.trim(String(body.company || ''));
+    const city = validator.trim(String(body.city || ''));
+    const lookingFor = validator.trim(String(body.lookingFor || ''));
+    const message = validator.trim(String(body.message || ''));
+
+    // --- Server-side validation (never trust the client) ---
+    if (!fullName || fullName.length < 2 || fullName.length > 120) {
+      return res.status(400).json({ error: 'Please provide a valid name.' });
+    }
+    if (!email || !validator.isEmail(email) || email.length > 180) {
+      return res.status(400).json({ error: 'Please provide a valid email address.' });
+    }
+    if (!phone || phone.length < 7 || phone.length > 30 || !/^[0-9+\-\s()]*$/.test(phone)) {
+      return res.status(400).json({ error: 'Please provide a valid phone number.' });
+    }
+    if (!company || company.length > 150) {
+      return res.status(400).json({ error: 'Please provide your company / startup name.' });
+    }
+    if (!city || city.length > 100) {
+      return res.status(400).json({ error: 'Please provide your city.' });
+    }
+    if (!lookingFor || !LEAD_LOOKING_FOR_OPTIONS.has(lookingFor)) {
+      return res.status(400).json({ error: 'Please select a valid option.' });
+    }
+    if (message.length > 2000) {
+      return res.status(400).json({ error: 'Message is too long.' });
+    }
+
+    try {
+      await appendLeadRow({
+        timestamp: new Date().toISOString(),
+        fullName,
+        email,
+        phone,
+        company,
+        city,
+        lookingFor,
+        message,
+      });
+    } catch (sheetErr) {
+      console.error('Google Sheets append error:', sheetErr);
+      return res.status(502).json({
+        error: 'We could not save your details right now. Please try again shortly.',
+      });
+    }
+
+    return res.json({ success: true });
+  } catch (err) {
+    console.error('Lead form error:', err);
     return res.status(500).json({ error: 'Unexpected server error. Please try again.' });
   }
 });

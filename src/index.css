@@ -427,3 +427,48 @@ img, svg { max-width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) {
   .legal-panel { animation: auto ease 0s 1 normal none running none; }
 }
+
+/* Lead-capture modal (auto-opens 3s after page load) */
+.lead-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(10, 27, 56, 0.72); display: flex; align-items: center; justify-content: center; padding: 20px; animation: leadFade 0.25s ease; }
+
+.lead-modal { position: relative; width: 100%; max-width: 560px; max-height: calc(100vh - 40px); overflow-y: auto; background: rgb(255, 255, 255); border-radius: 18px; padding: 34px 32px 30px; box-shadow: 0 30px 80px -20px rgba(10, 27, 56, 0.5); animation: leadPop 0.3s ease; }
+
+.lead-modal h2 { font-family: Montserrat, sans-serif; font-size: clamp(21px, 2.4vw, 26px); font-weight: 700; color: var(--navy); line-height: 1.2; margin-bottom: 8px; }
+
+.lead-modal .eyebrow { margin-bottom: 12px; }
+
+.lead-sub { color: var(--ink-70); font-size: 14.5px; margin-bottom: 6px; }
+
+.lead-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--grey); color: var(--navy); font-size: 21px; line-height: 1; cursor: pointer; transition: 0.2s; }
+
+.lead-close:hover { background: var(--navy); color: rgb(255, 255, 255); border-color: var(--navy); }
+
+.lead-modal form .btn-primary.lead-submit { justify-self: stretch; width: 100%; justify-content: center; margin-top: 4px; }
+
+.lead-error { color: var(--orange); font-size: 14.5px; font-weight: 600; }
+
+.lead-success { text-align: center; padding: 44px 32px 40px; }
+
+.lead-success-tick { width: 62px; height: 62px; margin: 0 auto 18px; border-radius: 50%; background: var(--gold); color: var(--navy); font-size: 32px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+.lead-success p { color: var(--ink-70); font-size: 15.6px; }
+
+@keyframes leadFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes leadPop {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 600px) {
+  .lead-overlay { padding: 12px; align-items: flex-end; }
+  .lead-modal { padding: 30px 20px 24px; max-height: calc(100vh - 24px); }
+  .lead-modal .form-row { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lead-overlay, .lead-modal { animation: none; }
+}
