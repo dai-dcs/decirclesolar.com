@@ -206,7 +206,51 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   }
 });
 
-const LEAD_LOOKING_FOR_OPTIONS = new Set(['Fundraising', 'Business Advisory']);
+const LEAD_LOOKING_FOR_OPTIONS = new Set([
+  'Project Finance',
+  'Asset Sale',
+  'Power Purchase Agreement',
+  'Others',
+]);
+
+const LEAD_STATES = new Set([
+  'Andaman and Nicobar Islands',
+  'Andhra Pradesh',
+  'Arunachal Pradesh',
+  'Assam',
+  'Bihar',
+  'Chandigarh',
+  'Chhattisgarh',
+  'Dadra and Nagar Haveli and Daman and Diu',
+  'Delhi',
+  'Goa',
+  'Gujarat',
+  'Haryana',
+  'Himachal Pradesh',
+  'Jammu and Kashmir',
+  'Jharkhand',
+  'Karnataka',
+  'Kerala',
+  'Ladakh',
+  'Lakshadweep',
+  'Madhya Pradesh',
+  'Maharashtra',
+  'Manipur',
+  'Meghalaya',
+  'Mizoram',
+  'Nagaland',
+  'Odisha',
+  'Puducherry',
+  'Punjab',
+  'Rajasthan',
+  'Sikkim',
+  'Tamil Nadu',
+  'Telangana',
+  'Tripura',
+  'Uttar Pradesh',
+  'Uttarakhand',
+  'West Bengal',
+]);
 
 app.post('/api/lead', leadLimiter, async (req, res) => {
   try {
@@ -221,7 +265,7 @@ app.post('/api/lead', leadLimiter, async (req, res) => {
     const email = validator.trim(String(body.email || ''));
     const phone = validator.trim(String(body.phone || ''));
     const company = validator.trim(String(body.company || ''));
-    const city = validator.trim(String(body.city || ''));
+    const state = validator.trim(String(body.state || ''));
     const lookingFor = validator.trim(String(body.lookingFor || ''));
     const message = validator.trim(String(body.message || ''));
 
@@ -232,14 +276,14 @@ app.post('/api/lead', leadLimiter, async (req, res) => {
     if (!email || !validator.isEmail(email) || email.length > 180) {
       return res.status(400).json({ error: 'Please provide a valid email address.' });
     }
-    if (!phone || phone.length < 7 || phone.length > 30 || !/^[0-9+\-\s()]*$/.test(phone)) {
+    if (phone && (phone.length < 7 || phone.length > 30 || !/^[0-9+\-\s()]*$/.test(phone))) {
       return res.status(400).json({ error: 'Please provide a valid phone number.' });
     }
     if (!company || company.length > 150) {
-      return res.status(400).json({ error: 'Please provide your company / startup name.' });
+      return res.status(400).json({ error: 'Please provide your business name.' });
     }
-    if (!city || city.length > 100) {
-      return res.status(400).json({ error: 'Please provide your city.' });
+    if (!state || !LEAD_STATES.has(state)) {
+      return res.status(400).json({ error: 'Please provide a valid state.' });
     }
     if (!lookingFor || !LEAD_LOOKING_FOR_OPTIONS.has(lookingFor)) {
       return res.status(400).json({ error: 'Please select a valid option.' });
@@ -255,7 +299,7 @@ app.post('/api/lead', leadLimiter, async (req, res) => {
         email,
         phone,
         company,
-        city,
+        state,
         lookingFor,
         message,
       });

@@ -1,6 +1,52 @@
 import { useEffect, useRef, useState } from "react";
+import Dropdown from "./Dropdown";
 
-const LOOKING_FOR_OPTIONS = ["Fundraising", "Business Advisory"];
+const LOOKING_FOR_OPTIONS = [
+  "Project Finance",
+  "Asset Sale",
+  "Power Purchase Agreement",
+  "Others",
+];
+
+// Indian states + union territories
+const STATE_OPTIONS = [
+  "Andaman and Nicobar Islands",
+  "Andhra Pradesh",
+  "Arunachal Pradesh",
+  "Assam",
+  "Bihar",
+  "Chandigarh",
+  "Chhattisgarh",
+  "Dadra and Nagar Haveli and Daman and Diu",
+  "Delhi",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal Pradesh",
+  "Jammu and Kashmir",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Ladakh",
+  "Lakshadweep",
+  "Madhya Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Puducherry",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar Pradesh",
+  "Uttarakhand",
+  "West Bengal",
+];
 
 const STORAGE_KEY = "decircle_lead_modal_v1";
 
@@ -15,7 +61,7 @@ const initialForm = {
   email: "",
   phone: "",
   company: "",
-  city: "",
+  state: "",
   lookingFor: "",
   message: "",
   // honeypot field — real users never fill this in; bots usually do
@@ -87,7 +133,8 @@ export default function LeadModal() {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e) => {
-      if (e.key === "Escape") close();
+      // defaultPrevented = a dropdown (or similar) consumed the Escape first
+      if (e.key === "Escape" && !e.defaultPrevented) close();
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -111,14 +158,14 @@ export default function LeadModal() {
     if (!emailRe.test(form.email.trim())) {
       return "Please enter a valid email address.";
     }
-    if (!form.phone.trim() || !/^[0-9+\-\s()]{7,30}$/.test(form.phone.trim())) {
+    if (form.phone.trim() && !/^[0-9+\-\s()]{7,30}$/.test(form.phone.trim())) {
       return "Please enter a valid phone number.";
     }
     if (!form.company.trim()) {
-      return "Please enter your company / startup name.";
+      return "Please enter your business name.";
     }
-    if (!form.city.trim()) {
-      return "Please enter your city.";
+    if (!form.state) {
+      return "Please select your state.";
     }
     if (!form.lookingFor) {
       return "Please select what you are looking for.";
@@ -158,7 +205,7 @@ export default function LeadModal() {
           email: form.email.trim(),
           phone: form.phone.trim(),
           company: form.company.trim(),
-          city: form.city.trim(),
+          state: form.state,
           lookingFor: form.lookingFor,
           message: form.message.trim(),
         }),
@@ -245,8 +292,7 @@ export default function LeadModal() {
             <input
               type="tel"
               name="phone"
-              placeholder="Phone *"
-              required
+              placeholder="Phone"
               value={form.phone}
               onChange={handleChange}
               maxLength={30}
@@ -255,7 +301,7 @@ export default function LeadModal() {
             <input
               type="text"
               name="company"
-              placeholder="Company / Startup Name *"
+              placeholder="Business Name *"
               required
               value={form.company}
               onChange={handleChange}
@@ -264,29 +310,20 @@ export default function LeadModal() {
             />
           </div>
           <div className="form-row">
-            <input
-              type="text"
-              name="city"
-              placeholder="City *"
-              required
-              value={form.city}
+            <Dropdown
+              name="state"
+              value={form.state}
+              options={STATE_OPTIONS}
+              placeholder="State *"
               onChange={handleChange}
-              maxLength={100}
-              autoComplete="address-level2"
             />
-            <select
-              required
+            <Dropdown
               name="lookingFor"
               value={form.lookingFor}
+              options={LOOKING_FOR_OPTIONS}
+              placeholder="What are you looking for? *"
               onChange={handleChange}
-            >
-              <option value="">What are you looking for? *</option>
-              {LOOKING_FOR_OPTIONS.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
+            />
           </div>
           <textarea
             name="message"
