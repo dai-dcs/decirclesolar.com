@@ -11,8 +11,6 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import validator from 'validator';
 
-import { appendLeadRow } from './sheets.js';
-
 const {
   BREVO_API_KEY,
   CONTACT_TO_EMAIL = 'care@decirclesolar.com',
@@ -95,14 +93,6 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
-// Warn (but don't crash) when the webhook isn't configured yet — the contact
-// flow must keep working on deployments that don't use the lead modal.
-if (!process.env.GOOGLE_SHEET_WEBHOOK_URL) {
-  console.warn(
-    'WARN: GOOGLE_SHEET_WEBHOOK_URL not set — POST /api/lead will fail until the Google Apps Script webhook is configured (see .env.example).'
-  );
-}
-
 function escapeHtml(str = '') {
   return str
     .replace(/&/g, '&amp;')
@@ -110,6 +100,33 @@ function escapeHtml(str = '') {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+// Sends a notification email through Brevo to CONTACT_TO_EMAIL, from the
+// verified sender CONTACT_FROM_EMAIL. Throws on any non-2xx response so the
+// caller decides the HTTP status it returns to the browser.
+async function sendBrevoEmail({ subject, htmlContent, replyTo }) {
+  const brevoRes = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'api-key': BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender: { name: CONTACT_FROM_NAME, email: CONTACT_FROM_EMAIL },
+      to: [{ email: CONTACT_TO_EMAIL }],
+      replyTo,
+      subject,
+      htmlContent,
+    }),
+  });
+
+  if (!brevoRes.ok) {
+    const errText = await brevoRes.text().catch(() => '');
+    console.error('Brevo API error:', brevoRes.status, errText);
+    throw new Error('brevo_send_failed');
+  }
 }
 
 const ENQUIRY_OPTIONS = new Set([
@@ -173,27 +190,13 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
       </div>
     `;
 
-    const brevoPayload = {
-      sender: { name: CONTACT_FROM_NAME, email: CONTACT_FROM_EMAIL },
-      to: [{ email: CONTACT_TO_EMAIL }],
-      replyTo: { email, name },
-      subject: `New website enquiry: ${enquiry} — ${name}`,
-      htmlContent,
-    };
-
-    const brevoRes = await fetch('https://api.brevo.com/v3/smtp/email', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'api-key': BREVO_API_KEY,
-      },
-      body: JSON.stringify(brevoPayload),
-    });
-
-    if (!brevoRes.ok) {
-      const errText = await brevoRes.text().catch(() => '');
-      console.error('Brevo API error:', brevoRes.status, errText);
+    try {
+      await sendBrevoEmail({
+        subject: `New website enquiry: ${enquiry} — ${name}`,
+        htmlContent,
+        replyTo: { email, name },
+      });
+    } catch {
       return res.status(502).json({
         error: 'We could not send your message right now. Please try again shortly.',
       });
@@ -292,21 +295,38 @@ app.post('/api/lead', leadLimiter, async (req, res) => {
       return res.status(400).json({ error: 'Message is too long.' });
     }
 
+    const safeFullName = escapeHtml(fullName);
+    const safeLeadEmail = escapeHtml(email);
+    const safeLeadPhone = escapeHtml(phone || '—');
+    const safeCompany = escapeHtml(company);
+    const safeState = escapeHtml(state);
+    const safeLookingFor = escapeHtml(lookingFor);
+    const safeLeadMessage = escapeHtml(message || '—').replace(/\n/g, '<br>');
+
+    const leadHtmlContent = `
+      <div style="font-family:Arial,sans-serif;font-size:15px;color:#0A1B38;line-height:1.6;">
+        <h2 style="color:#0A1B38;">New lead from decirclesolar.com</h2>
+        <table cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+          <tr><td style="font-weight:bold;">Full Name</td><td>${safeFullName}</td></tr>
+          <tr><td style="font-weight:bold;">Email</td><td>${safeLeadEmail}</td></tr>
+          <tr><td style="font-weight:bold;">Phone</td><td>${safeLeadPhone}</td></tr>
+          <tr><td style="font-weight:bold;">Business Name</td><td>${safeCompany}</td></tr>
+          <tr><td style="font-weight:bold;">State</td><td>${safeState}</td></tr>
+          <tr><td style="font-weight:bold;">Looking For</td><td>${safeLookingFor}</td></tr>
+          <tr><td style="font-weight:bold;vertical-align:top;">Message</td><td>${safeLeadMessage}</td></tr>
+        </table>
+      </div>
+    `;
+
     try {
-      await appendLeadRow({
-        timestamp: new Date().toISOString(),
-        fullName,
-        email,
-        phone,
-        company,
-        state,
-        lookingFor,
-        message,
+      await sendBrevoEmail({
+        subject: `New website lead: ${lookingFor} — ${company}`,
+        htmlContent: leadHtmlContent,
+        replyTo: { email, name: fullName },
       });
-    } catch (sheetErr) {
-      console.error('Google Sheets append error:', sheetErr);
+    } catch {
       return res.status(502).json({
-        error: 'We could not save your details right now. Please try again shortly.',
+        error: 'We could not send your details right now. Please try again shortly.',
       });
     }
 
